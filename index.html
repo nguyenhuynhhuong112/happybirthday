@@ -2,6 +2,7 @@
 <html lang="vi">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8" />
   <title>Happy Birthday My Love</title>
   <style>
@@ -18,6 +19,11 @@
     }
 
     .wish-section {
+
+    .wish-section h1 {
+      font-size: 3.5em;
+      margin-bottom: 15px;
+    }
       max-width: 750px;
       margin: 30px auto;
       color: white;
@@ -26,16 +32,12 @@
       z-index: 10;
     }
 
-    .wish-section h1 {
-      font-size: 3.5em;
-      margin-bottom: 15px;
+    .handlee-regular {
+      font-family: "Handlee", cursive;
+      font-weight: 600;
+      font-style: normal;
     }
 
-    .handlee-regular {
-        font-family: "Handlee", cursive;
-        font-weight: 600;
-        font-style: normal;
-      }
     .wish-section p {
       font-size: 1.3em;
       line-height: 1.5;
@@ -51,6 +53,16 @@
       margin: 0 auto 50px;
       position: relative;
       z-index: 5;
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: 1fr;
+
+        .flip-card {
+          width: 300px;
+        }
+      }
     }
 
     .flip-card {
@@ -378,7 +390,9 @@
   <div class="gallery">
     <div class="flip-card">
       <div class="flip-card-inner">
-        <div class="flip-card-front"><img src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/y16wrqcsmznoa8gw2xw2.jpg" alt="Ảnh 1" /></div>
+        <div class="flip-card-front"><img
+            src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/y16wrqcsmznoa8gw2xw2.jpg"
+            alt="Ảnh 1" /></div>
         <div class="flip-card-back">
           <p>Chúc em luôn vui vẻ mỗi ngày! 💖</p>
         </div>
@@ -387,7 +401,9 @@
 
     <div class="flip-card">
       <div class="flip-card-inner">
-        <div class="flip-card-front"><img src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/r1805fqeuekevrddnly2.jpg" alt="Ảnh 2" /></div>
+        <div class="flip-card-front"><img
+            src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/r1805fqeuekevrddnly2.jpg"
+            alt="Ảnh 2" /></div>
         <div class="flip-card-back">
           <p>Chúc tuổi mới thành công và tràn đầy năng lượng! 🎉</p>
         </div>
@@ -396,7 +412,9 @@
 
     <div class="flip-card">
       <div class="flip-card-inner">
-        <div class="flip-card-front"><img src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/ygrzxnv07fysm539jnpc.jpg" alt="Ảnh 3" /></div>
+        <div class="flip-card-front"><img
+            src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/ygrzxnv07fysm539jnpc.jpg"
+            alt="Ảnh 3" /></div>
         <div class="flip-card-back">
           <p>Mong mọi điều tốt đẹp sẽ đến với em! 🎂🎈</p>
         </div>
@@ -422,9 +440,10 @@
   <div class="floating-text right">🎉 Happy Birthday 🎂</div>
   <canvas id="fireworkCanvas"></canvas>
 
-  <audio id="birthdayAudio" loop onloadstart="console.log('Loading started')"
-    oncanplay="console.log('Can play')" onerror="console.log('Audio error')">
-    <source src="https://res.cloudinary.com/doxrobe1v/video/upload/v1754384855/an%20nguyen/tkjzimii0934u1zjwowr.mp3" type="audio/mp3" />
+  <audio id="birthdayAudio" loop onloadstart="console.log('Loading started')" oncanplay="console.log('Can play')"
+    onerror="console.log('Audio error')">
+    <source src="https://res.cloudinary.com/doxrobe1v/video/upload/v1754384855/an%20nguyen/tkjzimii0934u1zjwowr.mp3"
+      type="audio/mp3" />
   </audio>
 
   <script>
