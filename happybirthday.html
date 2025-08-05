@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday My Love</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to top right, #ff9a9e, #fad0c4);
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      color: white;
+      text-align: center;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .wish-section {
+      max-width: 700px;
+      margin: 30px auto;
+      color: white;
+      text-shadow: 0 0 5px #c70039;
+      position: relative;
+      z-index: 10;
+    }
+
+    .wish-section h1 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+    }
+
+    .wish-section p {
+      font-size: 1.3em;
+      line-height: 1.5;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      justify-items: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 350px;
+      height: 280px;
+      perspective: 1000px;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* THAY: lật bằng class, không dùng hover */
+    .flip-card-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+    }
+
+    .flip-card-front {
+      background: white;
+    }
+
+    .flip-card-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+      display: block;
+      transition: transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .flip-card-front:hover img {
+      transform: scale(1.05);
+    }
+
+    .flip-card-back {
+      background: #c70039;
+      color: white;
+      transform: rotateY(180deg);
+      padding: 20px;
+      font-size: 1.2em;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .flip-card:last-child .flip-card-front {
+      background: #f7d4d9;
+      color: #c70039;
+      font-weight: bold;
+      font-size: 3em;
+      border-radius: 15px;
+      animation: gentleGlow 4s ease-in-out infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    @keyframes gentleGlow {
+      0% {
+        opacity: 1;
+        text-shadow: 0 0 5px #c70039;
+      }
+
+      50% {
+        opacity: 0.9;
+        text-shadow: 0 0 20px #c70039;
+      }
+
+      100% {
+        opacity: 1;
+        text-shadow: 0 0 5px #c70039;
+      }
+    }
+
+    .heart {
+      position: fixed;
+      top: -50px;
+      color: red;
+      font-size: 24px;
+      animation: fall linear infinite;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .marquee {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      color: #fff;
+      font-size: 1.6em;
+      margin: 20px 0 40px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      z-index: 20;
+      position: relative;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marqueeAnim 30s linear infinite;
+    }
+
+    @keyframes marqueeAnim {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    #musicControls {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      background: rgba(199, 0, 57, 0.85);
+      padding: 10px 18px;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(199, 0, 57, 0.6);
+    }
+
+    #playBtn,
+    #pauseBtn {
+      font-size: 18px;
+      padding: 8px 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+    }
+
+    #playBtn {
+      background-color: #ff6b6b;
+    }
+
+    #playBtn:hover {
+      background-color: #c70039;
+      transform: scale(1.05);
+    }
+
+    #pauseBtn {
+      background-color: #555;
+    }
+
+    #pauseBtn:hover {
+      background-color: #333;
+      transform: scale(1.05);
+    }
+
+    #colorHearts {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 25px;
+      max-width: 600px;
+      z-index: 25;
+      user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #colorHearts span {
+      font-size: 48px;
+      animation: colorPulse 3s infinite alternate ease-in-out;
+      user-select: none;
+    }
+
+    #colorHearts span:nth-child(1) {
+      animation-delay: 0s;
+      color: #ff3b3b;
+    }
+
+    #colorHearts span:nth-child(2) {
+      animation-delay: 0.5s;
+      color: #ff8c00;
+    }
+
+    #colorHearts span:nth-child(3) {
+      animation-delay: 1s;
+      color: #ffd700;
+    }
+
+    #colorHearts span:nth-child(4) {
+      animation-delay: 1.5s;
+      color: #32cd32;
+    }
+
+    #colorHearts span:nth-child(5) {
+      animation-delay: 2s;
+      color: #1e90ff;
+    }
+
+    #colorHearts span:nth-child(6) {
+      animation-delay: 2.5s;
+      color: #c71585;
+    }
+
+    @keyframes colorPulse {
+      0% {
+        filter: drop-shadow(0 0 5px currentColor);
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      100% {
+        filter: drop-shadow(0 0 20px currentColor);
+        transform: scale(1.3);
+        opacity: 1;
+      }
+    }
+
+    .floating-text {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: #fff;
+      text-shadow: 2px 2px 5px #ff4d6d;
+      writing-mode: vertical-rl;
+      z-index: 5;
+      opacity: 0.6;
+      animation: floatSide 5s ease-in-out infinite;
+      user-select: none;
+    }
+
+    .floating-text.left {
+      left: 10px;
+    }
+
+    .floating-text.right {
+      right: 10px;
+    }
+
+    @keyframes floatSide {
+      0% {
+        transform: translateY(-50%) translateX(0);
+      }
+
+      50% {
+        transform: translateY(-52%) translateX(5px);
+      }
+
+      100% {
+        transform: translateY(-50%) translateX(0);
+      }
+    }
+
+    #fireworkCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 50;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nội dung trang -->
+  <div class="marquee">
+    <span>🎉 Chúc Mừng Sinh Nhật! Chúc em tuổi mới tràn đầy niềm vui và hạnh phúc! 🎂🎈</span>
+  </div>
+
+  <div class="wish-section">
+    <h1>💖 Happy Birthday, Bé Iu 💖</h1>
+    <p>On this special day, I just want to say...<br>
+      You are my everything. Wishing you joy, love, and a heart full of happiness today and always. 💐🎂</p>
+  </div>
+
+  <!-- Gallery ảnh -->
+  <div class="gallery">
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front"><img src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/y16wrqcsmznoa8gw2xw2.jpg" alt="Ảnh 1" /></div>
+        <div class="flip-card-back">
+          <p>Chúc em luôn vui vẻ mỗi ngày! 💖</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front"><img src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/r1805fqeuekevrddnly2.jpg" alt="Ảnh 2" /></div>
+        <div class="flip-card-back">
+          <p>Chúc tuổi mới thành công và tràn đầy năng lượng! 🎉</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front"><img src="https://res.cloudinary.com/doxrobe1v/image/upload/v1754383214/an%20nguyen/ygrzxnv07fysm539jnpc.jpg" alt="Ảnh 3" /></div>
+        <div class="flip-card-back">
+          <p>Mong mọi điều tốt đẹp sẽ đến với em! 🎂🎈</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">Happy Birthday</div>
+        <div class="flip-card-back">
+          <p>Chúc em mãi luôn yêu đời và xinh đẹp như vậy! 🎂🎉</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="musicControls">
+    <button id="playBtn">🎵 Bật nhạc Happy Birthday</button>
+    <button id="pauseBtn" style="display:none;">⏸️ Dừng nhạc</button>
+  </div>
+
+  <div class="floating-text left">🎂 Happy Birthday 🎉</div>
+  <div class="floating-text right">🎉 Happy Birthday 🎂</div>
+  <canvas id="fireworkCanvas"></canvas>
+
+  <audio id="birthdayAudio" loop onloadstart="console.log('Loading started')"
+    oncanplay="console.log('Can play')" onerror="console.log('Audio error')">
+    <source src="https://res.cloudinary.com/doxrobe1v/video/upload/v1754384855/an%20nguyen/tkjzimii0934u1zjwowr.mp3" type="audio/mp3" />
+  </audio>
+
+  <script>
+    const audio = document.getElementById('birthdayAudio');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+
+    playBtn.addEventListener('click', () => {
+      audio.play();
+      playBtn.style.display = 'none';
+      pauseBtn.style.display = 'inline-block';
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      audio.pause();
+      pauseBtn.style.display = 'none';
+      playBtn.style.display = 'inline-block';
+    });
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 5 + Math.random() * 3 + 's';
+      heart.style.fontSize = (15 + Math.random() * 20) + 'px';
+      heart.style.opacity = 0.8 + Math.random() * 0.2;
+      heart.textContent = '❤️';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+
+    setInterval(() => {
+      createHeart();
+      setTimeout(createHeart, 200);
+    }, 400);
+
+    const canvas = document.getElementById('fireworkCanvas');
+    const ctx = canvas.getContext('2d');
+    let cw, ch;
+    function resize() {
+      cw = canvas.width = window.innerWidth;
+      ch = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x; this.y = y; this.color = color;
+        this.speed = Math.random() * 4 + 1;
+        this.angle = Math.random() * 2 * Math.PI;
+        this.gravity = 0.05;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.01 + 0.005;
+        this.vx = Math.cos(this.angle) * this.speed;
+        this.vy = Math.sin(this.angle) * this.speed;
+      }
+      update() {
+        this.vx *= 0.95;
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+      draw(ctx) {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    class Firework {
+      constructor() {
+        this.x = Math.random() * cw;
+        this.y = ch + 10;
+        this.targetY = Math.random() * ch / 2;
+        this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        this.particles = [];
+        this.state = 'launching';
+      }
+      update() {
+        if (this.state === 'launching') {
+          this.y -= 6;
+          if (this.y <= this.targetY) {
+            this.state = 'exploding';
+            for (let i = 0; i < 30; i++) {
+              this.particles.push(new Particle(this.x, this.y, this.color));
+            }
+          }
+        } else if (this.state === 'exploding') {
+          this.particles.forEach(p => p.update());
+          this.particles = this.particles.filter(p => p.alpha > 0);
+          if (this.particles.length === 0) this.state = 'done';
+        }
+      }
+      draw(ctx) {
+        if (this.state === 'launching') {
+          ctx.save();
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        } else if (this.state === 'exploding') {
+          this.particles.forEach(p => p.draw(ctx));
+        }
+      }
+      isDone() {
+        return this.state === 'done';
+      }
+    }
+
+    let fireworks = [];
+    function loop() {
+      ctx.clearRect(0, 0, cw, ch);
+      if (Math.random() < 0.04) fireworks.push(new Firework());
+      fireworks.forEach(fw => {
+        fw.update();
+        fw.draw(ctx);
+      });
+      fireworks = fireworks.filter(fw => !fw.isDone());
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // 🔁 Lật ảnh bằng JavaScript
+    const cards = document.querySelectorAll('.flip-card');
+    cards.forEach(card => {
+      const inner = card.querySelector('.flip-card-inner');
+
+      card.addEventListener('mouseenter', () => {
+        cards.forEach(c => {
+          if (c !== card) {
+            c.querySelector('.flip-card-inner').classList.remove('flipped');
+          }
+        });
+        inner.classList.add('flipped');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        inner.classList.remove('flipped');
+      });
+    });
+  </script>
+</body>
+
+</html>
